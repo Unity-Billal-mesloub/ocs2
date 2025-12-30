@@ -10,6 +10,7 @@ find_package(ocs2_robotic_tools REQUIRED)
 find_package(ocs2_pinocchio_interface REQUIRED)
 find_package(pinocchio REQUIRED)
 find_package(hpp-fcl REQUIRED)
+find_package(coal REQUIRED)
 find_package(tinyxml2 REQUIRED)
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 find_package(Boost REQUIRED COMPONENTS system filesystem log_setup log)
@@ -31,9 +32,11 @@ add_library(${PROJECT_NAME}
   src/SelfCollisionConstraintCppAd.cpp
 )
 target_link_libraries(${PROJECT_NAME}
-  pinocchio::pinocchio
-  hpp-fcl::hpp-fcl
-  tinyxml2::tinyxml2
+  PUBLIC
+    pinocchio::pinocchio
+    hpp-fcl::hpp-fcl
+    coal::coal
+    tinyxml2::tinyxml2
 )
 target_include_directories(${PROJECT_NAME}
   PUBLIC
@@ -44,9 +47,10 @@ target_include_directories(${PROJECT_NAME}
     ${hpp-fcl_INCLUDE_DIRS}
 )
 ament_target_dependencies(${PROJECT_NAME}
-  ocs2_core
-  ocs2_robotic_tools
-  ocs2_pinocchio_interface
+  PUBLIC
+    ocs2_core
+    ocs2_robotic_tools
+    ocs2_pinocchio_interface
 )
 target_compile_options(${PROJECT_NAME} PUBLIC ${FLAGS})
 
@@ -82,6 +86,7 @@ ament_export_dependencies(
   ocs2_pinocchio_interface
   pinocchio
   hpp-fcl
+  coal
   tinyxml2
   Eigen3
   Boost
